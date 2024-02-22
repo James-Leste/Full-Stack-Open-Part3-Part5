@@ -2,8 +2,6 @@ const express = require('express')
 const app = express()
 app.use(express.json())
 
-
-
 let info = [
     {
         "id": 1,
@@ -60,8 +58,24 @@ app.delete("/api/persons/:id", (request, response) => {
         response.send("<h1>Not Found</h1>")
         response.status(404).end()
     }
-    
-    
+})
+
+app.post("/api/persons", (request, response) => {
+    let person = request.body
+    if (!Object.hasOwn(person, "name")) {
+        console.log('%c [ person ]-68', 'font-size:13px; background:pink; color:#bf2c9f;', person)
+        response.json({ error: 'No name attribute' }).status(400).end()
+    } else if (info.find(p => p.name === person.name)) {
+        console.log('%c [ person ]-68', 'font-size:13px; background:pink; color:#bf2c9f;', person)
+        response.json({ error: 'name must be unique' }).status(400).end()
+    } else {
+        const uuid = crypto.randomUUID()
+        console.log('%c [ uuid ]-66', 'font-size:13px; background:pink; color:#bf2c9f;', uuid)
+        person = { id: uuid, ...person }
+
+        response.json(person)
+    }
+
 })
 
 const PORT = 3001
