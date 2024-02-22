@@ -1,6 +1,18 @@
 const express = require('express')
+const morgan = require('morgan')
 const app = express()
 app.use(express.json())
+morgan.token('body', (req, res) => JSON.stringify(req.body));
+app.use(morgan(function (tokens, req, res) {
+    return [
+      tokens.method(req, res),
+      tokens.url(req, res),
+      tokens.status(req, res),
+      tokens.res(req, res, 'content-length'), '-',
+      tokens['response-time'](req, res), 'ms',
+      tokens.body(req,res)
+    ].join(' ')
+  }))
 
 let info = [
     {
@@ -63,14 +75,14 @@ app.delete("/api/persons/:id", (request, response) => {
 app.post("/api/persons", (request, response) => {
     let person = request.body
     if (!Object.hasOwn(person, "name")) {
-        console.log('%c [ person ]-68', 'font-size:13px; background:pink; color:#bf2c9f;', person)
+        //console.log('%c [ person ]-68', 'font-size:13px; background:pink; color:#bf2c9f;', person)
         response.json({ error: 'No name attribute' }).status(400).end()
     } else if (info.find(p => p.name === person.name)) {
-        console.log('%c [ person ]-68', 'font-size:13px; background:pink; color:#bf2c9f;', person)
+        //console.log('%c [ person ]-68', 'font-size:13px; background:pink; color:#bf2c9f;', person)
         response.json({ error: 'name must be unique' }).status(400).end()
     } else {
         const uuid = crypto.randomUUID()
-        console.log('%c [ uuid ]-66', 'font-size:13px; background:pink; color:#bf2c9f;', uuid)
+        //console.log('%c [ uuid ]-66', 'font-size:13px; background:pink; color:#bf2c9f;', uuid)
         person = { id: uuid, ...person }
 
         response.json(person)
