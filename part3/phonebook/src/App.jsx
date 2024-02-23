@@ -30,15 +30,16 @@ const App = () => {
                 const id = persons.filter(person => person.name === newName)[0].id
                 personService.update(id, { id: id, ...newObject }).then(updated => {
                     setPersons(persons.map(person => person.id !== id ? person : updated))
+                    setNotificationStatus('N')
+                    setNotification(`Change ${newName}'s number into ${newNumber}`)
+                    setNewName("")
+                    setNewNumber("")
                 }).catch(error => {
                     setNotificationStatus('E')
-                    setNotification(`Information of ${newName} has already been removed from the server`)
+                    setNotification(`${error.response.data.error}`)
                 })
 
-                setNotificationStatus('N')
-                setNotification(`Added ${newName}`)
-                setNewName("")
-                setNewNumber("")
+                
             }
             return
         }
@@ -49,6 +50,9 @@ const App = () => {
             setNotification(`Added ${newName}`)
             setNewName('')
             setNewNumber('')
+        }).catch(error => {
+            setNotificationStatus('E')
+            setNotification(`${error.response.data.error}`)
         })
     }
 
