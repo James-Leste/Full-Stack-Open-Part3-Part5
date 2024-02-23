@@ -67,7 +67,7 @@ app.delete("/api/persons/:id", (request, response, next) => {
     }).catch(error => next(error))
 })
 
-app.post("/api/persons", (request, response) => {
+app.post("/api/persons", (request, response, next) => {
     let person = request.body
     if (!Object.hasOwn(person, "name")) {
         //console.log('%c [ person ]-68', 'font-size:13px; background:pink; color:#bf2c9f;', person)
@@ -79,27 +79,29 @@ app.post("/api/persons", (request, response) => {
         new Person(person).save().then(result => {
             console.log(`added ${person.name} number ${person.number} to phonebook`)
             response.json(person)
-        })
+        }).catch(error => next(error))
     }
 })
 
-app.put("/api/persons/:id", (request, response) => {
+app.put("/api/persons/:id", (request, response, next) => {
     const person = request.body
     const id = request.params.id
-    Person.findOneAndUpdate({ id: id }, person, {new: true}).then(result => {
+    Person.findOneAndUpdate({ id: id }, person, {new: true, runValidators: true}).then(result => {
         if (result) {
             response.json(result)
         } else {
             response.status(404).end()
         }
-    })
+    }).catch(error => next(error))
 })
 
 // errorHandling midware
 const errorHandler = (error, request, response, next) => {
-    console.error(error.message)
+    console.error(error.name)
     if (error.name === 'CastError') {
         return response.status(400).send({ error: 'malformatted id' })
+    } else if (error.name === "ValidationError") {
+        return response.status(400).json({ error: error.message })
     }
     next(error)
 }
