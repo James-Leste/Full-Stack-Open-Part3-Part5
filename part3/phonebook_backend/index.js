@@ -30,13 +30,20 @@ app.get("/api/persons", (request, response) => {
     })
 })
 
-// app.get("/info", (request, response) => {
-//     const length = info.length
-//     response.send(`
-//         <p>Phonebook has info for ${length} people</p>
-//         <p>${Date(Date.now())}</p>
-//         `)
-// })
+app.get("/info", (request, response) => {
+    Person.find({}).then(result => {
+        if (result) {
+            const l = result.length
+            response.send(`
+            <p>Phonebook has info for ${l} people</p>
+            <p>${Date(Date.now())}</p>
+        `)
+        } else {
+            response.status(404).end()
+        }
+    })
+
+})
 
 app.get("/api/persons/:id", (request, response, next) => {
     const id = request.params.id
@@ -52,7 +59,7 @@ app.get("/api/persons/:id", (request, response, next) => {
 app.delete("/api/persons/:id", (request, response, next) => {
     const id = request.params.id;
     Person.findOneAndDelete({ id: id }).then(result => {
-        if (result){
+        if (result) {
             response.json(result)
         } else {
             response.status(404).end()
@@ -79,9 +86,9 @@ app.post("/api/persons", (request, response) => {
 app.put("/api/persons/:id", (request, response) => {
     const person = request.body
     const id = request.params.id
-    Person.findOneAndUpdate({id: id}, person).then(result => {
+    Person.findOneAndUpdate({ id: id }, person, {new: true}).then(result => {
         if (result) {
-            response.json({id: id, ...person})
+            response.json(result)
         } else {
             response.status(404).end()
         }
