@@ -2,7 +2,7 @@ const express = require('express')
 
 const morgan = require('morgan')
 const cors = require('cors')
-const Person = require("./models/persons.js")
+const Person = require('./models/persons.js')
 
 const app = express()
 app.use(express.json())
@@ -11,7 +11,7 @@ app.use(cors())
 
 
 //morgan logging config
-morgan.token('body', (req, res) => JSON.stringify(req.body));
+morgan.token('body', (req, res) => JSON.stringify(req.body))
 app.use(morgan(function (tokens, req, res) {
     return [
         tokens.method(req, res),
@@ -24,13 +24,13 @@ app.use(morgan(function (tokens, req, res) {
 }))
 
 //get all persons
-app.get("/api/persons", (request, response) => {
+app.get('/api/persons', (request, response) => {
     Person.find({}).then(result => {
         response.json(result)
     })
 })
 
-app.get("/info", (request, response) => {
+app.get('/info', (request, response) => {
     Person.find({}).then(result => {
         if (result) {
             const l = result.length
@@ -45,10 +45,10 @@ app.get("/info", (request, response) => {
 
 })
 
-app.get("/api/persons/:id", (request, response, next) => {
+app.get('/api/persons/:id', (request, response, next) => {
     const id = request.params.id
     Person.find({ id: id }).then(result => {
-        if (result.length != 0) {
+        if (result.length !== 0) {
             response.json(result[0])
         } else {
             response.status(404).end()
@@ -56,8 +56,8 @@ app.get("/api/persons/:id", (request, response, next) => {
     }).catch(error => next(error))
 })
 
-app.delete("/api/persons/:id", (request, response, next) => {
-    const id = request.params.id;
+app.delete('/api/persons/:id', (request, response, next) => {
+    const id = request.params.id
     Person.findOneAndDelete({ id: id }).then(result => {
         if (result) {
             response.json(result)
@@ -67,9 +67,9 @@ app.delete("/api/persons/:id", (request, response, next) => {
     }).catch(error => next(error))
 })
 
-app.post("/api/persons", (request, response, next) => {
+app.post('/api/persons', (request, response, next) => {
     let person = request.body
-    if (!Object.hasOwn(person, "name")) {
+    if (!Object.hasOwn(person, 'name')) {
         //console.log('%c [ person ]-68', 'font-size:13px; background:pink; color:#bf2c9f;', person)
         response.json({ error: 'No name attribute' }).status(400).end()
     } else {
@@ -83,10 +83,10 @@ app.post("/api/persons", (request, response, next) => {
     }
 })
 
-app.put("/api/persons/:id", (request, response, next) => {
+app.put('/api/persons/:id', (request, response, next) => {
     const person = request.body
     const id = request.params.id
-    Person.findOneAndUpdate({ id: id }, person, {new: true, runValidators: true}).then(result => {
+    Person.findOneAndUpdate( { id: id }, person, { new: true, runValidators: true }).then(result => {
         if (result) {
             response.json(result)
         } else {
@@ -100,7 +100,7 @@ const errorHandler = (error, request, response, next) => {
     console.error(error.name)
     if (error.name === 'CastError') {
         return response.status(400).send({ error: 'malformatted id' })
-    } else if (error.name === "ValidationError") {
+    } else if (error.name === 'ValidationError') {
         return response.status(400).json({ error: error.message })
     }
     next(error)
