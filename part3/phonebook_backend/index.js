@@ -76,6 +76,18 @@ app.post("/api/persons", (request, response) => {
     }
 })
 
+app.put("/api/persons/:id", (request, response) => {
+    const person = request.body
+    const id = request.params.id
+    Person.findOneAndUpdate({id: id}, person).then(result => {
+        if (result) {
+            response.json({id: id, ...person})
+        } else {
+            response.status(404).end()
+        }
+    })
+})
+
 // errorHandling midware
 const errorHandler = (error, request, response, next) => {
     console.error(error.message)
