@@ -3,7 +3,7 @@ content-type: application/json
 
 {
     "name": "wrongnumber",
-    "number": "01-123456-1"
+    "number": "010-1234561"
 }
 ###
 
@@ -17,7 +17,7 @@ PUT http://localhost:3001/api/persons/001acc77-6534-4aa0-8ace-b437677424a1
 content-type: application/json
 
 {
-    "name": "a",
+    "name": "aaa",
     "number": "040-123456"
 }
 
