@@ -88,3 +88,22 @@ describe('favorite blog', () => {
         assert.deepStrictEqual(result, favorite)
     })
 })
+
+describe('most blogs', () => {
+    
+    test('most blogs from non-empty list', () => {
+        const result = listHelper.mostBlogs(blogs)
+        assert.deepStrictEqual(
+            result, 
+            {
+                author: 'Robert C. Martin',
+                blogs: 3
+            }
+        )
+    })
+
+    test('empty blog', () => {
+        const result = listHelper.mostBlogs(emptyBlog)
+        assert.deepStrictEqual(result, {})
+    })
+})
