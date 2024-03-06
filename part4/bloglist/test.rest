@@ -9,3 +9,17 @@ content-type: application/json
     "url": "www.example.com",
     "likes": 1
 }
+
+###
+DELETE http://localhost:3001/api/blogs/65e82e7168d7bf5944ef1742 HTTP/1.1
+
+###
+PUT http://localhost:3001/api/blogs/65e59513ef16585229de91bb HTTP/1.1
+content-type: application/json
+
+{
+    "title" : "new",
+    "author": "ziqiwang",
+    "url": "www.example.com",
+    "likes": 1
+}

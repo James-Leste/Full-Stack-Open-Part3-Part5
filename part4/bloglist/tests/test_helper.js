@@ -1,6 +1,7 @@
 const Blog = require('../models/blog')
 
 const newBlog = {
+    _id: "65e82e2142a6654094096d9f",
     title: "New Item",
     author: "Ziqi Wang",
     url: "https://james-leste.github.io",
@@ -52,6 +53,11 @@ const initialBlogs = [
     }
 ]
 
+const insertTemBlog = async () => {
+    const blog = new Blog(newBlog)
+    await blog.save()
+}
+
 const blogsInDb = async () => {
     const blogs = await Blog.find({})
     return blogs.map(blog => blog.toJSON())
@@ -64,5 +70,5 @@ module.exports = {
     newBlogWithNoURL,
     initialBlogs,
     blogsInDb,
-    
+    insertTemBlog
 }

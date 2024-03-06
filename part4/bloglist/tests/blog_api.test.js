@@ -67,6 +67,27 @@ test('no url or title return 400 bad request', async () => {
         .expect(400)
 })
 
+test('delete test', async () => {
+    await helper.insertTemBlog()
+    const result = await api.delete('/api/blogs/65e82e2142a6654094096d9f')
+    assert.deepStrictEqual(result.body.id, helper.newBlog._id)
+})
+
+test('update blog', async () => {
+    const updatedBlog = {
+        "title" : "new",
+        "author": "ziqiwang",
+        "url": "www.example.com",
+        "likes": 1
+    }
+    await helper.insertTemBlog()
+    const result = await api
+                        .put('/api/blogs/65e82e2142a6654094096d9f')
+                        .send(updatedBlog)
+    assert.strictEqual(result.body.title, updatedBlog.title)
+    
+})
+
 after(async () => {
     await mongoose.connection.close()
 })

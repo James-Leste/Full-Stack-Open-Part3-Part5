@@ -15,23 +15,6 @@ mongoose.connect(url)
         console.log('error connecting to MongoDB:', error.message)
     })
 
-// const phonebookSchema = new mongoose.Schema({
-//     id: String,
-//     name: {
-//         type: String,
-//         minLength: 3
-//     },
-//     number: {
-//         type: String,
-//         minLength: 8,
-//         validate: {
-//             validator: v => {
-//                 return /^\d{2,3}-\d{5,}$/.test(v)
-//             }
-//         }
-//     },
-// })
-
 const blogSchema = new mongoose.Schema({
     title: String,
     author: String,
@@ -49,7 +32,7 @@ blogSchema.set('toJSON', {
         delete returnedObject._id
         delete returnedObject.__v
     },
-    //getters: true, 
+    getters: true, 
     virtuals: true
 })
 
