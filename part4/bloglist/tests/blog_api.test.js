@@ -14,6 +14,12 @@ const newBlog = {
     likes: 2,
 }
 
+const newBlogWithNoLike = {
+    title: "Another New Item",
+    author: "Ziqi Wang",
+    url: "https://james-leste.github.io",
+}
+
 const initialBlogs = [
     {
         title: "React patterns",
@@ -71,7 +77,7 @@ test('post new', async () => {
         .send(newBlog)
     const response = await api.get('/api/blogs')
     
-    console.log('%c [ object ]-75', 'font-size:13px; background:pink; color:#bf2c9f;', response.body[4])
+    
     assert.strictEqual(response.body.length, 5)
 })
 
@@ -80,6 +86,15 @@ test('post has id', async () => {
     for (let item of response.body) {
         assert(Object.keys(item).includes('id'))
     }
+})
+
+test('no like equals 0', async () => {
+    await api
+        .post('/api/blogs')
+        .send(newBlogWithNoLike)
+    const response = await api.get('/api/blogs')
+    console.log('%c [ response ]-96', 'font-size:13px; background:pink; color:#bf2c9f;', response.body[4])
+    assert.strictEqual(response.body[4].likes, 0)
 })
 
 after(async () => {
