@@ -33,17 +33,22 @@ mongoose.connect(url)
 // })
 
 const blogSchema = new mongoose.Schema({
+    
     title: String,
     author: String,
     url: String,
     likes: Number
 })
 
+
+//Delete _id and __v attribute of GET from database
 blogSchema.set('toJSON', {
     transform: (document, returnedObject) => {
         delete returnedObject._id
         delete returnedObject.__v
-    }
+    },
+    //getters: true, 
+    virtuals: true
 })
 
 const Blog = mongoose.model('Blog', blogSchema)
