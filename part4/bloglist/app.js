@@ -6,13 +6,15 @@ require('dotenv').config()
 const cors = require('cors')
 //enable logging
 const morgan = require('morgan')
-//database model
+//database mode
 const blogRouter = require('./controllers/blogController')
+const usersRouter = require('./controllers/userController')
 
 
 app.use(cors())
 app.use(express.json())
 app.use(blogRouter)
+app.use(usersRouter)
 
 morgan.token('body', (req, res) => JSON.stringify(req.body))
 app.use(morgan(function (tokens, req, res) {
@@ -26,4 +28,4 @@ app.use(morgan(function (tokens, req, res) {
     ].join(' ')
 }))
 
-module.exports=app
+module.exports = app

@@ -6,8 +6,10 @@ content-type: application/json
 
 {
     "author": "ziqiwang",
+    "title": "test",
     "url": "www.example.com",
-    "likes": 1
+    "likes": 1,
+    "user": "65f852b6b31a1f66f030df06"
 }
 
 ###
@@ -22,4 +24,17 @@ content-type: application/json
     "author": "ziqiwang",
     "url": "www.example.com",
     "likes": 1
+}
+
+###
+GET http://localhost:3001/api/users
+
+### 
+POST http://localhost:3001/api/users HTTP/1.1
+content-type: application/json
+
+{
+    "username": "James",
+    "name": "Ziqi Wang",
+    "password": "123456"
 }

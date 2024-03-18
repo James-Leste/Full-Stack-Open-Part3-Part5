@@ -1,4 +1,5 @@
 const Blog = require('../models/blog')
+const User = require('../models/user')
 
 const newBlog = {
     _id: "65e82e2142a6654094096d9f",
@@ -53,6 +54,24 @@ const initialBlogs = [
     }
 ]
 
+const initialUser = [
+    {
+        _id: "65f856046bb9bcdd5c2e97a6",
+        username: "James",
+        name: "Ziqi Wang",
+        blog: []
+    }
+]
+
+const blogPostByJames = {
+    _id: "65e82e2142a6654094096d9f",
+    title: "New Item",
+    author: "Ziqi Wang",
+    url: "https://james-leste.github.io",
+    likes: 2,
+    user: "65f856046bb9bcdd5c2e97a6"
+}
+
 const insertTemBlog = async () => {
     const blog = new Blog(newBlog)
     await blog.save()
@@ -63,12 +82,20 @@ const blogsInDb = async () => {
     return blogs.map(blog => blog.toJSON())
 }
 
+const usersInDb = async() => {
+    const users = await User.find({})
+    return users.map(user => user.toJSON())
+}
+
 module.exports = {
     newBlog,
     newBlogWithNoLike,
     newBlogWithNoTitle,
     newBlogWithNoURL,
     initialBlogs,
+    initialUser,
+    blogPostByJames,
     blogsInDb,
-    insertTemBlog
+    insertTemBlog,
+    usersInDb
 }
