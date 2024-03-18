@@ -36,7 +36,6 @@ blogSchema.set('toJSON', {
         delete returnedObject._id
         delete returnedObject.__v
     },
-    getters: true,
     virtuals: true
 })
 

@@ -4,7 +4,7 @@ const Blog = require('../models/blog')
 const User = require('../models/user')
 
 blogRouter.get('/api/blogs', async (request, response) => {
-    const blogs = await Blog.find({}).populate("user")
+    const blogs = await Blog.find({}).populate('user', {username:1, name:1, id:1})
     response.json(blogs)
 })
 
@@ -15,12 +15,12 @@ blogRouter.post('/api/blogs', async (request, response) => {
         const body = request.body
         const user = await User.findById(body.user)
         const blog = new Blog({
-            _id: body._id,
+            _id: body._id === undefined ? new mongoose.Types.ObjectId() : body._id,
             title: body.title,
             author: body.author,
             url: body.url,
             likes: body.likes,
-            user: user._id
+            user: user._id.toString()
         })
         logger.info(request.body)
         const result = await blog.save()
