@@ -59,6 +59,12 @@ test('get blog post populate user detail', async() => {
     assert.deepStrictEqual(users[0].id,getResult.id)
 })
 
+test('user with short password should not pass', async () => {
+    await api.post('/api/users')
+        .send(helper.userWithShortPassword)
+        .expect(400)
+})
+
 after(async () => {
     await mongoose.connection.close()
 })

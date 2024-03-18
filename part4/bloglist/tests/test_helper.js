@@ -59,6 +59,7 @@ const initialUser = [
         _id: "65f856046bb9bcdd5c2e97a6",
         username: "James",
         name: "Ziqi Wang",
+        password: "123456",
         blog: []
     }
 ]
@@ -72,6 +73,14 @@ const blogPostByJames = {
     user: "65f856046bb9bcdd5c2e97a6"
 }
 
+const userWithShortPassword = {
+    _id: "65f856046bb9bcdd5c2e97a5",
+    username: "Short",
+    name: "Shorty",
+    password: "12",
+    blog: []
+}
+
 const insertTemBlog = async () => {
     const blog = new Blog(newBlog)
     await blog.save()
@@ -82,7 +91,7 @@ const blogsInDb = async () => {
     return blogs.map(blog => blog.toJSON())
 }
 
-const usersInDb = async() => {
+const usersInDb = async () => {
     const users = await User.find({})
     return users.map(user => user.toJSON())
 }
@@ -95,6 +104,7 @@ module.exports = {
     initialBlogs,
     initialUser,
     blogPostByJames,
+    userWithShortPassword,
     blogsInDb,
     insertTemBlog,
     usersInDb

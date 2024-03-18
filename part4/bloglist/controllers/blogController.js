@@ -1,5 +1,6 @@
 const blogRouter = require('express').Router()
 const logger = require('../utils/logger')
+const mongoose = require('mongoose')
 const Blog = require('../models/blog')
 const User = require('../models/user')
 
@@ -20,10 +21,11 @@ blogRouter.post('/api/blogs', async (request, response) => {
             author: body.author,
             url: body.url,
             likes: body.likes,
-            user: user._id.toString()
+            user: user._id
         })
         logger.info(request.body)
         const result = await blog.save()
+        logger.info(user)
         user.blog = user.blog.concat(result._id)
         await user.save()
         response.status(201).json(result)

@@ -25,6 +25,7 @@ userSchema.set('toJSON', {
         // the passwordHash should not be revealed
         delete returnedObject.passwordHash
     }
+    //virtuals: true
 })
 
 const User = mongoose.model('User', userSchema)
