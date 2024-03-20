@@ -3,18 +3,34 @@ const logger = require('../utils/logger')
 const mongoose = require('mongoose')
 const Blog = require('../models/blog')
 const User = require('../models/user')
+const jwt = require('jsonwebtoken')
 
-blogRouter.get('/api/blogs', async (request, response) => {
-    const blogs = await Blog.find({}).populate('user', {username:1, name:1, id:1})
+
+const getTokenFrom = request => {
+    const authorization = request.get('authorization')
+    if (authorization && authorization.startsWith('Bearer ')) {
+        return authorization.replace('Bearer ', '')
+    }
+    return null
+}
+
+
+blogRouter.get('/', async (request, response) => {
+    const blogs = await Blog.find({}).populate('user', { username: 1, name: 1, id: 1 })
     response.json(blogs)
 })
 
-blogRouter.post('/api/blogs', async (request, response) => {
+blogRouter.post('/', async (request, response) => {
     if (!Object.keys(request.body).includes('url') || !Object.keys(request.body).includes('title')) {
         response.status(400).end()
     } else {
         const body = request.body
-        const user = await User.findById(body.user)
+        const decodedToken = jwt.verify(getTokenFrom(request), process.env.SECRET)
+        if (!decodedToken.id) {
+            return response.status(401).json({ error: 'token invalid' })
+        }
+        const user = await User.findById(decodedToken.id)
+        //const user = await User.findById(body.user)
         const blog = new Blog({
             _id: body._id === undefined ? new mongoose.Types.ObjectId() : body._id,
             title: body.title,
@@ -32,7 +48,7 @@ blogRouter.post('/api/blogs', async (request, response) => {
     }
 })
 
-blogRouter.delete('/api/blogs/:id', async (request, response) => {
+blogRouter.delete('/:id', async (request, response) => {
     const id = request.params.id
     const blog = await Blog.findById(id)
     logger.info(blog)
@@ -44,7 +60,7 @@ blogRouter.delete('/api/blogs/:id', async (request, response) => {
     }
 })
 
-blogRouter.put('/api/blogs/:id', async (request, response) => {
+blogRouter.put('/:id', async (request, response) => {
     const id = request.params.id
     const body = request.body
     const result = await Blog.findOneAndUpdate({ _id: id }, body, { new: true, runValidators: true })
