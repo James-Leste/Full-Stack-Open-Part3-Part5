@@ -1,6 +1,8 @@
 const express = require('express')
 require('express-async-errors')
 const app = express()
+const middleware = require('./utils/middleware')
+app.use(middleware.tokenExtractor)
 // enable .env
 require('dotenv').config()
 //enable cors
@@ -12,8 +14,6 @@ const morgan = require('morgan')
 const blogRouter = require('./controllers/blogController')
 const usersRouter = require('./controllers/userController')
 const authRouter = require('./controllers/authController')
-
-const middleware = require('./utils/middleware')
 
 
 
