@@ -3,7 +3,6 @@ require('express-async-errors')
 const app = express()
 const middleware = require('./utils/middleware')
 app.use(middleware.tokenExtractor)
-app.use(middleware.userExtractor)
 // enable .env
 require('dotenv').config()
 //enable cors
@@ -20,7 +19,7 @@ const authRouter = require('./controllers/authController')
 
 app.use(cors())
 app.use(express.json())
-app.use('/api/blogs', blogRouter)
+app.use('/api/blogs',middleware.userExtractor, blogRouter)
 app.use('/api/users', usersRouter)
 app.use('/api/login', authRouter)
 app.use(middleware.errorHandler)
