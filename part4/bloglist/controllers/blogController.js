@@ -17,8 +17,10 @@ blogRouter.post('/', async (request, response) => {
     } else {
         const body = request.body
         const decodedToken = jwt.verify(request.token, process.env.SECRET)
-        const user = await User.findById(decodedToken.id)
+        console.log(decodedToken)
+        const user = await request.user
         //const user = await User.findById(body.user)
+        console.log(user)
         const blog = new Blog({
             _id: body._id === undefined ? new mongoose.Types.ObjectId() : body._id,
             title: body.title,
