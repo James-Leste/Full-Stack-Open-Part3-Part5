@@ -3,13 +3,14 @@ GET http://localhost:3001/api/blogs
 ###
 POST http://localhost:3001/api/blogs HTTP/1.1
 content-type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Illvb25hIiwiaWQiOiI2NWY5YjE5ODY1MjhmY2EwMWRlYzA5YWUiLCJpYXQiOjE3MTA5MzM1MDN9.T3SHPAm5xx01pzeH3Jfq8qS7iKXO7pi8USNWrhMwM00
 
 {
-    "author": "ziqiwang",
-    "title": "test",
-    "url": "www.example.com",
-    "likes": 1,
-    "user": "65f856046bb9bcdd5c2e97a6"
+    "author": "Yoona",
+    "title": "tokentest",
+    "url": "urlurlurl",
+    "likes": 0,
+    "user": "65f9b1986528fca01dec09ae"
 }
 
 ###
@@ -34,7 +35,16 @@ POST http://localhost:3001/api/users HTTP/1.1
 content-type: application/json
 
 {
-    "username": "James",
-    "name": "Ziqi Wang",
-    "password": "12"
+    "username": "Yoona",
+    "name": "You Wu",
+    "password": "123"
+}
+
+###
+POST http://localhost:3001/api/login HTTP/1.1
+content-type: application/json
+
+{
+    "username": "Yoona",
+    "password": "123"
 }
