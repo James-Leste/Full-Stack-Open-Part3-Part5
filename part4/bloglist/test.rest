@@ -1,4 +1,4 @@
-GET http://localhost:3001/api/blogsq
+GET http://localhost:3001/api/blogs
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Illvb25hIiwiaWQiOiI2NWY5YjE5ODY1MjhmY2EwMWRlYzA5YWUiLCJpYXQiOjE3MTA5NTE5ODl9.HjM7cqDAvxINKtRrVBCPhF9_8JJ-w5dYRtuqy9AhpfE
 
 ###
