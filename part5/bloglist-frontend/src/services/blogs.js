@@ -3,9 +3,20 @@
 import axios from 'axios'
 const baseUrl = 'http://localhost:3001/api/blogs'
 
-const getAll = () => {
+let token = null
+
+const setToken = (newToken) => {
+    token = `Bearer ${newToken}`
+}
+
+const getAll = async () => {
     const request = axios.get(baseUrl)
-    return request.then((response) => response.data)
+    const response = await request
+    return response.data
+}
+
+const createNewBlog = async () => {
+    
 }
 
 export default { getAll }

@@ -1,9 +1,19 @@
 /** @format */
+import {useEffect} from 'react'
+import login from '../services/blogs'
 
-const Blog = ({ blog }) => (
-    <div>
-        {blog.title} {blog.author}
-    </div>
-)
+
+
+const Blogs = () => {
+    useEffect(()=>{
+            
+    })
+    return (
+        <div>
+            {blog.title} {blog.author}
+        </div>
+    )
+}
+
 
 export default Blog

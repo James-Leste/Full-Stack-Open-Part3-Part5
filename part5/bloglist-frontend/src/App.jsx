@@ -1,14 +1,14 @@
 /** @format */
 
 import { useState, useEffect } from 'react'
-import Blog from './components/Blog'
+
 import Login from './components/Login'
 import Notification from './components/Notification'
-import blogService from './services/blogs'
+import Blog from './components/Blog'
+
 import login from './services/login'
 
 const App = () => {
-    const [blogs, setBlogs] = useState([])
     const [username, setUsername] = useState('')
     const [password, setPassword] = useState('')
     const [message, setMessage] = useState('')
@@ -21,7 +21,6 @@ const App = () => {
             setUser(user)
             setUsername('')
             setPassword('')
-            setMessage('Logged in successfully')
         } catch (exception) {
             setMessage('Invalid Password or Username')
             console.log(exception)
@@ -35,26 +34,26 @@ const App = () => {
         setPassword(event.target.value)
     }
 
-    useEffect(() => {
-        blogService.getAll().then((blogs) => setBlogs(blogs))
-    }, [])
-
-    return (
+    if (user === null) {
+        return (
+            <div>
+                <Login
+                    username={username}
+                    password={password}
+                    handlePassword={handlePassword}
+                    handleUsername={handleUsername}
+                    handleLogin={handleLogin}
+                />
+                <Notification message={message} />
+            </div>
+        )
+    } else {
         <div>
-            <Login
-                username={username}
-                password={password}
-                handlePassword={handlePassword}
-                handleUsername={handleUsername}
-                handleLogin={handleLogin}
-            />
-            <Notification message={message} />
-            <h2>blogs</h2>
-            {blogs.map((blog) => (
-                <Blog key={blog.id} blog={blog} />
-            ))}
+            
         </div>
-    )
+    }
+
+    
 }
 
 export default App

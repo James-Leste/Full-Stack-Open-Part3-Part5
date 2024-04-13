@@ -2,7 +2,8 @@ const blogRouter = require('express').Router()
 const logger = require('../utils/logger')
 const mongoose = require('mongoose')
 const Blog = require('../models/blog')
-const User = require('../models/user')
+const middleware = require('../utils/middleware')
+
 const jwt = require('jsonwebtoken')
 
 
@@ -11,7 +12,8 @@ blogRouter.get('/', async (request, response) => {
     response.json(blogs)
 })
 
-blogRouter.post('/', async (request, response) => {
+
+blogRouter.post('/', middleware.userExtractor, async (request, response) => {
     if (!Object.keys(request.body).includes('url') || !Object.keys(request.body).includes('title')) {
         response.status(400).end()
     } else {
@@ -38,7 +40,7 @@ blogRouter.post('/', async (request, response) => {
     }
 })
 
-blogRouter.delete('/:id', async (request, response) => {
+blogRouter.delete('/:id', middleware.userExtractor, async (request, response) => {
     const blogId = request.params.id
     const decodedToken = jwt.verify(request.token, process.env.SECRET)
     const userId = decodedToken.id
@@ -60,7 +62,7 @@ blogRouter.delete('/:id', async (request, response) => {
 
 })
 
-blogRouter.put('/:id', async (request, response) => {
+blogRouter.put('/:id', middleware.userExtractor, async (request, response) => {
     const id = request.params.id
     const body = request.body
     const result = await Blog.findOneAndUpdate({ _id: id }, body, { new: true, runValidators: true })
