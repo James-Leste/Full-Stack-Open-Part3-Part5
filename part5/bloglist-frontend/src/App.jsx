@@ -5,12 +5,16 @@ import { useState, useEffect } from 'react'
 import Login from './components/Login'
 import Notification from './components/Notification'
 import Blogs from './components/Blogs'
+import NewBlog from './components/NewBlog'
 
 import login from './services/login'
 
 const App = () => {
     const [username, setUsername] = useState('')
     const [password, setPassword] = useState('')
+    const [title, setTitle] = useState('')
+    const [author, setAuthor] = useState('')
+    const [url, setUrl] = useState('')
     const [message, setMessage] = useState('')
     const [user, setUser] = useState(null)
 
@@ -50,6 +54,11 @@ const App = () => {
         setPassword(event.target.value)
     }
 
+    const handleCreateBlog = async (event) => {
+        event.preventDefault()
+        console.log('created')
+    }
+
     if (user === null){
         return (
             <div>
@@ -70,9 +79,17 @@ const App = () => {
     } else {
         return (
             <div>
+                <div><span>{user.username} has logged in</span></div>
                 <div>
                     <button onClick={handleLogout}>Logout</button>
                 </div>
+                <NewBlog title={title} author={author} url={url} 
+                    handleTitle={(event)=>setTitle(event.target.value)}
+                    handleAuthor={(event)=>setAuthor(event.target.value)}
+                    handleUrl={(event)=>setUrl(event.target.value)}
+                    handleSubmit={handleCreateBlog}/>
+                
+                
                 <Blogs />
             </div>
        
