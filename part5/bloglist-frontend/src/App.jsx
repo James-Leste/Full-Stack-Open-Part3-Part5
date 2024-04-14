@@ -6,6 +6,7 @@ import Login from './components/Login'
 import Notification from './components/Notification'
 import Blogs from './components/Blogs'
 import NewBlog from './components/NewBlog'
+import Togglable from './components/Togglable'
 
 import login from './services/login'
 import blogService from './services/blogs'
@@ -19,6 +20,7 @@ const App = () => {
     const [message, setMessage] = useState('')
     const [user, setUser] = useState(null)
     const [refreshBlogs, setRefreshBlogs] = useState(false)
+    const [loginVisible, setLoginVisible] = useState(false)
 
     useEffect(() => {
         const loggedUserJSON = window.localStorage.getItem('loggedNoteappUser')
@@ -109,15 +111,17 @@ const App = () => {
                 <div>
                     <Notification message={message} />
                 </div>
-                <NewBlog
-                    title={title}
-                    author={author}
-                    url={url}
-                    handleTitle={(event) => setTitle(event.target.value)}
-                    handleAuthor={(event) => setAuthor(event.target.value)}
-                    handleUrl={(event) => setUrl(event.target.value)}
-                    handleSubmit={handleCreateBlog}
-                />
+                <Togglable buttonLabel={'New Post'}>
+                    <NewBlog
+                        title={title}
+                        author={author}
+                        url={url}
+                        handleTitle={(event) => setTitle(event.target.value)}
+                        handleAuthor={(event) => setAuthor(event.target.value)}
+                        handleUrl={(event) => setUrl(event.target.value)}
+                        handleSubmit={handleCreateBlog}
+                    />
+                </Togglable>
                 <Blogs refreshBlogs={refreshBlogs}/>
             </div>
         )
