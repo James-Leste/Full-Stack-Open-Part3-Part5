@@ -49,10 +49,12 @@ const App = () => {
             }, '3000')
         }
     }
+
     const handleLogout = (event) => {
         window.localStorage.clear()
         setUser(null)
     }
+
     const handleCreateBlog = async (newBlog) => {
         try {
             await blogService.create(newBlog)
@@ -62,6 +64,21 @@ const App = () => {
             setTimeout(() => {
                 setMessage('')
             }, '10000')
+            setRefreshBlogs(!refreshBlogs)
+        } catch (exception) {
+            setMessage(exception.message)
+        }
+    }
+
+    const handleLike = async (blog) => {
+        try {
+            const newBlog = {
+                title: blog.title,
+                author: blog.author,
+                url: blog.url,
+                likes: blog.likes + 1
+            }
+            await blogService.update(blog.id, newBlog)
             setRefreshBlogs(!refreshBlogs)
         } catch (exception) {
             setMessage(exception.message)
@@ -104,7 +121,7 @@ const App = () => {
                         handleSubmit={handleCreateBlog}
                     />
                 </Togglable>
-                <Blogs refreshBlogs={refreshBlogs}/>
+                <Blogs refreshBlogs={refreshBlogs} handleLike={handleLike}/>
             </div>
         )
     }

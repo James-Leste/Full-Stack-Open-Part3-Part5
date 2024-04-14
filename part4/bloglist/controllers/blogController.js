@@ -62,7 +62,7 @@ blogRouter.delete('/:id', middleware.userExtractor, async (request, response) =>
 
 })
 
-blogRouter.put('/:id', middleware.userExtractor, async (request, response) => {
+blogRouter.put('/:id', async (request, response) => {
     const id = request.params.id
     const body = request.body
     const result = await Blog.findOneAndUpdate({ _id: id }, body, { new: true, runValidators: true })

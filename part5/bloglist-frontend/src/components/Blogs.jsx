@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react'
 import blogService from '../services/blogs'
 import Togglable from './Togglable'
 
-const Blogs = ({refreshBlogs}) => {
+const Blogs = ({refreshBlogs, handleLike}) => {
     const [blogs, setBlogs] = useState([])
 
     useEffect(() => {
@@ -15,6 +15,11 @@ const Blogs = ({refreshBlogs}) => {
         fetchData()
     }, [refreshBlogs])
 
+    const addLike = async (blog) => {
+        await handleLike(blog)
+        console.log(blog)
+    }
+
     return (
         <div>
             <ul>
@@ -24,8 +29,10 @@ const Blogs = ({refreshBlogs}) => {
                             Title: {blog.title} <br /> 
                             Author: {blog.author} <br />
                             <Togglable buttonLabel={'View'}>
-                                Likes: {blog.likes} <button>like</button><br />
+                                Likes: {blog.likes} <button onClick={()=>{addLike(blog)}}>like</button><br />
                                 Url: {blog.url} <br />
+                                BlogId: {blog.id} <br />
+                                Username: {blog.user.username}
                             </Togglable>
                         </li>
                     
