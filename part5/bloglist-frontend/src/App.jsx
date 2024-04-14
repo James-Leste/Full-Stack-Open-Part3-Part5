@@ -14,13 +14,9 @@ import blogService from './services/blogs'
 const App = () => {
     const [username, setUsername] = useState('')
     const [password, setPassword] = useState('')
-    const [title, setTitle] = useState('')
-    const [author, setAuthor] = useState('')
-    const [url, setUrl] = useState('')
     const [message, setMessage] = useState('')
     const [user, setUser] = useState(null)
     const [refreshBlogs, setRefreshBlogs] = useState(false)
-    const [loginVisible, setLoginVisible] = useState(false)
 
     useEffect(() => {
         const loggedUserJSON = window.localStorage.getItem('loggedNoteappUser')
@@ -57,25 +53,11 @@ const App = () => {
         window.localStorage.clear()
         setUser(null)
     }
-
-    const handleUsername = (event) => {
-        setUsername(event.target.value)
-    }
-    const handlePassword = (event) => {
-        setPassword(event.target.value)
-    }
-
-    const handleCreateBlog = async (event) => {
-        event.preventDefault()
-        const newBlog = {
-            title: title === "" ? null : title,
-            author: author === "" ? null : author,
-            url: url === "" ? null : url,
-        }
+    const handleCreateBlog = async (newBlog) => {
         try {
             await blogService.create(newBlog)
             setMessage(
-                `created post: {title:${title}, author: ${author}, url:${url}}`
+                `created post: {title:${newBlog.title}, author: ${newBlog.author}, url:${newBlog.url}}`
             )
             setTimeout(() => {
                 setMessage('')
@@ -93,8 +75,8 @@ const App = () => {
                 <Login
                     username={username}
                     password={password}
-                    handlePassword={handlePassword}
-                    handleUsername={handleUsername}
+                    handlePassword={event => setPassword(event.target.value)}
+                    handleUsername={event => setUsername(event.target.value)}
                     handleLogin={handleLogin}
                 />
             </div>
@@ -113,12 +95,12 @@ const App = () => {
                 </div>
                 <Togglable buttonLabel={'New Post'}>
                     <NewBlog
-                        title={title}
-                        author={author}
-                        url={url}
-                        handleTitle={(event) => setTitle(event.target.value)}
-                        handleAuthor={(event) => setAuthor(event.target.value)}
-                        handleUrl={(event) => setUrl(event.target.value)}
+                        // title={title}
+                        // author={author}
+                        // url={url}
+                        // handleTitle={(event) => setTitle(event.target.value)}
+                        // handleAuthor={(event) => setAuthor(event.target.value)}
+                        // handleUrl={(event) => setUrl(event.target.value)}
                         handleSubmit={handleCreateBlog}
                     />
                 </Togglable>
