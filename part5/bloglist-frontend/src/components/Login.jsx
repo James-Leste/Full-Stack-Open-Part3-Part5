@@ -8,7 +8,7 @@ const Login = ({
     handleLogin,
 }) => (
     <div>
-        <h1>Login</h1>
+        <h1>Login to the application</h1>
         <form onSubmit={handleLogin}>
             <div>
                 Username: <input value={username} onChange={handleUsername} />

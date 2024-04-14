@@ -45,10 +45,6 @@ beforeEach(async () => {
     console.log("done")
 })
 
-test('dummy test', async () => {
-    assert(1)
-})
-
 test('user blog list works correctly', async () => {
     const token = await login()
     const response = await api.post('/api/blogs')

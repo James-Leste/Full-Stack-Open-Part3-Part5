@@ -3,14 +3,13 @@ GET http://localhost:3001/api/blogs
 ###
 POST http://localhost:3001/api/blogs HTTP/1.1
 content-type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Illvb25hIiwiaWQiOiI2NWY5YjE5ODY1MjhmY2EwMWRlYzA5YWUiLCJpYXQiOjE3MTA5NTE5ODl9.HjM7cqDAvxINKtRrVBCPhF9_8JJ-w5dYRtuqy9AhpfE
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Illvb25hIiwiaWQiOiI2NWY5YjE5ODY1MjhmY2EwMWRlYzA5YWUiLCJpYXQiOjE3MTMwMzc4MTF9.JGYX-OTmkn9CO5mKEN_OCqA2vJ8QGFNpCcpDcYnEwbs
 
 {
     "author": "Yoona",
-    "title": "testuserextractor",
+    "title": "no user",
     "url": "urlurlurl",
-    "likes": 0,
-    "user": "65f9b1986528fca01dec09ae"
+    "likes": 0
 }
 
 ###

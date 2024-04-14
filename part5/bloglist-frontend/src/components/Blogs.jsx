@@ -2,7 +2,7 @@
 import { useEffect, useState } from 'react'
 import blogService from '../services/blogs'
 
-const Blogs = () => {
+const Blogs = ({refreshBlogs}) => {
     const [blogs, setBlogs] = useState([])
 
     useEffect(() => {
@@ -12,7 +12,7 @@ const Blogs = () => {
             console.log(response)
         }
         fetchData()
-    }, [])
+    }, [refreshBlogs])
 
     return (
         <div>

@@ -8,6 +8,7 @@ import Blogs from './components/Blogs'
 import NewBlog from './components/NewBlog'
 
 import login from './services/login'
+import blogService from './services/blogs'
 
 const App = () => {
     const [username, setUsername] = useState('')
@@ -17,13 +18,15 @@ const App = () => {
     const [url, setUrl] = useState('')
     const [message, setMessage] = useState('')
     const [user, setUser] = useState(null)
+    const [refreshBlogs, setRefreshBlogs] = useState(false)
 
     useEffect(() => {
         const loggedUserJSON = window.localStorage.getItem('loggedNoteappUser')
         if (loggedUserJSON) {
-          const user = JSON.parse(loggedUserJSON)
-          console.log(user)
-          setUser(user)
+            const user = JSON.parse(loggedUserJSON)
+            console.log(user)
+            setUser(user)
+            blogService.setToken(user.token)
         }
     }, [])
 
@@ -32,14 +35,20 @@ const App = () => {
         try {
             const user = await login(username, password)
             window.localStorage.setItem(
-                'loggedNoteappUser', JSON.stringify(user)
-            ) 
+                'loggedNoteappUser',
+                JSON.stringify(user)
+            )
             setUser(user)
             setUsername('')
             setPassword('')
         } catch (exception) {
             setMessage('Invalid Password or Username')
+            setUsername('')
+            setPassword('')
             console.log(exception)
+            setTimeout(() => {
+                setMessage('')
+            }, '3000')
         }
     }
     const handleLogout = (event) => {
@@ -56,15 +65,29 @@ const App = () => {
 
     const handleCreateBlog = async (event) => {
         event.preventDefault()
-        console.log('created')
+        const newBlog = {
+            title: title === "" ? null : title,
+            author: author === "" ? null : author,
+            url: url === "" ? null : url,
+        }
+        try {
+            await blogService.create(newBlog)
+            setMessage(
+                `created post: {title:${title}, author: ${author}, url:${url}}`
+            )
+            setTimeout(() => {
+                setMessage('')
+            }, '10000')
+            setRefreshBlogs(!refreshBlogs)
+        } catch (exception) {
+            setMessage(exception.message)
+        }
     }
 
-    if (user === null){
+    if (user === null) {
         return (
             <div>
-                <div>
-                    <button onClick={handleLogout}>Logout</button>
-                </div>
+                <Notification message={message} />
                 <Login
                     username={username}
                     password={password}
@@ -72,30 +95,33 @@ const App = () => {
                     handleUsername={handleUsername}
                     handleLogin={handleLogin}
                 />
-                <Notification message={message} />
-                
             </div>
         )
     } else {
         return (
             <div>
-                <div><span>{user.username} has logged in</span></div>
+                <div>
+                    <span>{user.username} has logged in</span>
+                </div>
                 <div>
                     <button onClick={handleLogout}>Logout</button>
                 </div>
-                <NewBlog title={title} author={author} url={url} 
-                    handleTitle={(event)=>setTitle(event.target.value)}
-                    handleAuthor={(event)=>setAuthor(event.target.value)}
-                    handleUrl={(event)=>setUrl(event.target.value)}
-                    handleSubmit={handleCreateBlog}/>
-                
-                
-                <Blogs />
+                <div>
+                    <Notification message={message} />
+                </div>
+                <NewBlog
+                    title={title}
+                    author={author}
+                    url={url}
+                    handleTitle={(event) => setTitle(event.target.value)}
+                    handleAuthor={(event) => setAuthor(event.target.value)}
+                    handleUrl={(event) => setUrl(event.target.value)}
+                    handleSubmit={handleCreateBlog}
+                />
+                <Blogs refreshBlogs={refreshBlogs}/>
             </div>
-       
         )
     }
-    
 }
 
 export default App

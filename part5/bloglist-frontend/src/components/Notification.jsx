@@ -2,7 +2,7 @@
 
 const Notification = ({ message }) => (
     <div>
-        <span>{message}</span>
+        <span>Notification: {message}</span>
     </div>
 )
 

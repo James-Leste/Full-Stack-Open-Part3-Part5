@@ -1,3 +1,5 @@
+/** @format */
+
 const NewBlog = ({
     title,
     author,
@@ -5,7 +7,7 @@ const NewBlog = ({
     handleTitle,
     handleAuthor,
     handleUrl,
-    handleSubmit
+    handleSubmit,
 }) => (
     <div>
         <h2>Create A New Blog</h2>
@@ -20,7 +22,7 @@ const NewBlog = ({
                 URL: <input value={url} onChange={handleUrl} />
             </div>
             <div>
-                <button type='submit'>Login</button>
+                <button type='submit'>Submit</button>
             </div>
         </form>
     </div>

@@ -19,6 +19,7 @@ const newBlogWithNoLike = {
 }
 
 const newBlogWithNoTitle = {
+    title: null,
     author: 'Ziqi Wang',
     url: 'https://james-leste.github.io',
     likes: 9,
@@ -28,6 +29,7 @@ const newBlogWithNoTitle = {
 const newBlogWithNoURL = {
     title: 'Another New Item',
     author: 'Ziqi Wang',
+    url: null,
     likes: 9,
     user: '65f856046bb9bcdd5c2e97a6'
 }
