@@ -28,6 +28,13 @@ const App = () => {
         }
     }, [])
 
+    const timeoutMessage = (message) => {
+        setMessage(message)
+        setTimeout(() => {
+            setMessage('')
+        }, '10000')
+    }
+
     const handleLogin = async (event) => {
         event.preventDefault()
         try {
@@ -40,13 +47,11 @@ const App = () => {
             setUsername('')
             setPassword('')
         } catch (exception) {
-            setMessage('Invalid Password or Username')
             setUsername('')
             setPassword('')
+            timeoutMessage('Invalid Password or Username')
             console.log(exception)
-            setTimeout(() => {
-                setMessage('')
-            }, '3000')
+            
         }
     }
 
@@ -58,15 +63,10 @@ const App = () => {
     const handleCreateBlog = async (newBlog) => {
         try {
             await blogService.create(newBlog)
-            setMessage(
-                `created post: {title:${newBlog.title}, author: ${newBlog.author}, url:${newBlog.url}}`
-            )
-            setTimeout(() => {
-                setMessage('')
-            }, '10000')
+            timeoutMessage(`created post: {title:${newBlog.title}, author: ${newBlog.author}, url:${newBlog.url}}`)
             setRefreshBlogs(!refreshBlogs)
         } catch (exception) {
-            setMessage(exception.message)
+            timeoutMessage(exception.message)
         }
     }
 
@@ -81,7 +81,21 @@ const App = () => {
             await blogService.update(blog.id, newBlog)
             setRefreshBlogs(!refreshBlogs)
         } catch (exception) {
-            setMessage(exception.message)
+            timeoutMessage(exception.message)
+        }
+    }
+
+    const handleDelete = async (blog) => {
+        try {
+            if (window.confirm(`Remove blog '${blog.title}' by ${blog.author}`)) {
+                await blogService.remove(blog.id)
+                timeoutMessage(`Successfully removed blog '${blog.title}' by ${blog.author}`)
+                
+                setRefreshBlogs(!refreshBlogs)
+              }
+              timeoutMessage(`Successfully removed blog '${blog.title}' by ${blog.author}`)
+        } catch (exception) {
+            timeoutMessage(exception.message)
         }
     }
 
@@ -121,7 +135,7 @@ const App = () => {
                         handleSubmit={handleCreateBlog}
                     />
                 </Togglable>
-                <Blogs refreshBlogs={refreshBlogs} handleLike={handleLike} />
+                <Blogs refreshBlogs={refreshBlogs} handleLike={handleLike} handleDelete={handleDelete} user={user} />
             </div>
         )
     }

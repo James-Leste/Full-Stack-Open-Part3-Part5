@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react'
 import blogService from '../services/blogs'
 import Togglable from './Togglable'
 
-const Blogs = ({ refreshBlogs, handleLike }) => {
+const Blogs = ({ refreshBlogs, handleLike, handleDelete, user }) => {
     const [blogs, setBlogs] = useState([])
 
     useEffect(() => {
@@ -21,6 +21,11 @@ const Blogs = ({ refreshBlogs, handleLike }) => {
         console.log(blog)
     }
 
+    const deletePost = async (blog) => {
+        await handleDelete(blog)
+        console.log(blog)
+    }
+
     return (
         <div>
             <ul>
@@ -34,8 +39,8 @@ const Blogs = ({ refreshBlogs, handleLike }) => {
                         <Togglable buttonLabel={'View'}>
                             Likes: {blog.likes}{' '}
                             <button
-                                onClick={() => {
-                                    addLike(blog)
+                                onClick={async () => {
+                                    await addLike(blog)
                                 }}
                             >
                                 like
@@ -45,7 +50,9 @@ const Blogs = ({ refreshBlogs, handleLike }) => {
                             BlogId: {blog.id} <br />
                             Username: {blog.user.username}
                         </Togglable>
-                        <button>remove</button>
+                        <div style={{display: blog.user.id === user.id ? '' : 'none'}}>
+                            <button onClick={async () => {await deletePost(blog)}}>remove</button>
+                        </div>             
                     </li>
                 ))}
             </ul>
