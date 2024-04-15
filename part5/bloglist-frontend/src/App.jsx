@@ -76,7 +76,7 @@ const App = () => {
                 title: blog.title,
                 author: blog.author,
                 url: blog.url,
-                likes: blog.likes + 1
+                likes: blog.likes + 1,
             }
             await blogService.update(blog.id, newBlog)
             setRefreshBlogs(!refreshBlogs)
@@ -92,8 +92,8 @@ const App = () => {
                 <Login
                     username={username}
                     password={password}
-                    handlePassword={event => setPassword(event.target.value)}
-                    handleUsername={event => setUsername(event.target.value)}
+                    handlePassword={(event) => setPassword(event.target.value)}
+                    handleUsername={(event) => setUsername(event.target.value)}
                     handleLogin={handleLogin}
                 />
             </div>
@@ -121,7 +121,7 @@ const App = () => {
                         handleSubmit={handleCreateBlog}
                     />
                 </Togglable>
-                <Blogs refreshBlogs={refreshBlogs} handleLike={handleLike}/>
+                <Blogs refreshBlogs={refreshBlogs} handleLike={handleLike} />
             </div>
         )
     }

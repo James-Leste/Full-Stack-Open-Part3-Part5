@@ -17,15 +17,10 @@ DELETE http://localhost:3001/api/blogs/65fb2faa016acb2e2768e30f HTTP/1.1
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Illvb25hIiwiaWQiOiI2NWY5YjE5ODY1MjhmY2EwMWRlYzA5YWUiLCJpYXQiOjE3MTA5NTE5ODl9.HjM7cqDAvxINKtRrVBCPhF9_8JJ-w5dYRtuqy9AhpfE
 
 ###
-PUT http://localhost:3001/api/blogs/65e59513ef16585229de91bb HTTP/1.1
+PUT http://localhost:3001/api/blogs/65f89d38fa079ecf9af70b28 HTTP/1.1
 content-type: application/json
 
-{
-    "title" : "new",
-    "author": "ziqiwang",
-    "url": "www.example.com",
-    "likes": 1
-}
+{"title":"test","author":"ziqiwang","url":"www.example.com","likes":2}
 
 ###
 GET http://localhost:3001/api/users

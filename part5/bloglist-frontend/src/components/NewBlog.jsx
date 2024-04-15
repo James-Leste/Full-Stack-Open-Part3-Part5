@@ -1,8 +1,8 @@
 /** @format */
 
-import { useState } from "react"
+import { useState } from 'react'
 
-const NewBlog = ({handleSubmit}) => {
+const NewBlog = ({ handleSubmit }) => {
     const [title, setTitle] = useState('')
     const [author, setAuthor] = useState('')
     const [url, setUrl] = useState('')
@@ -10,31 +10,43 @@ const NewBlog = ({handleSubmit}) => {
     const addBlog = async (event) => {
         event.preventDefault()
         const newBlog = {
-            title: title === "" ? null : title,
-            author: author === "" ? null : author,
-            url: url === "" ? null : url,
+            title: title === '' ? null : title,
+            author: author === '' ? null : author,
+            url: url === '' ? null : url,
         }
         await handleSubmit(newBlog)
     }
-    return (<div>
-        <h2>Create A New Blog</h2>
-        <form onSubmit={addBlog}>
-            <div>
-                Title: <input value={title} onChange={(event)=>setTitle(event.target.value)} />
-            </div>
-            <div>
-                Author: <input value={author} onChange={(event)=>setAuthor(event.target.value)} />
-            </div>
-            <div>
-                URL: <input value={url} onChange={(event)=>setUrl(event.target.value)} />
-            </div>
-            <div>
-                <button type='submit'>Submit</button>
-            </div>
-        </form>
-    </div>)
+    return (
+        <div>
+            <h2>Create A New Blog</h2>
+            <form onSubmit={addBlog}>
+                <div>
+                    Title:{' '}
+                    <input
+                        value={title}
+                        onChange={(event) => setTitle(event.target.value)}
+                    />
+                </div>
+                <div>
+                    Author:{' '}
+                    <input
+                        value={author}
+                        onChange={(event) => setAuthor(event.target.value)}
+                    />
+                </div>
+                <div>
+                    URL:{' '}
+                    <input
+                        value={url}
+                        onChange={(event) => setUrl(event.target.value)}
+                    />
+                </div>
+                <div>
+                    <button type='submit'>Submit</button>
+                </div>
+            </form>
+        </div>
+    )
 }
-    
-
 
 export default NewBlog
