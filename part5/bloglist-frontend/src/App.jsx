@@ -51,7 +51,6 @@ const App = () => {
             setPassword('')
             timeoutMessage('Invalid Password or Username')
             console.log(exception)
-            
         }
     }
 
@@ -63,7 +62,9 @@ const App = () => {
     const handleCreateBlog = async (newBlog) => {
         try {
             await blogService.create(newBlog)
-            timeoutMessage(`created post: {title:${newBlog.title}, author: ${newBlog.author}, url:${newBlog.url}}`)
+            timeoutMessage(
+                `created post: {title:${newBlog.title}, author: ${newBlog.author}, url:${newBlog.url}}`
+            )
             setRefreshBlogs(!refreshBlogs)
         } catch (exception) {
             timeoutMessage(exception.message)
@@ -87,13 +88,19 @@ const App = () => {
 
     const handleDelete = async (blog) => {
         try {
-            if (window.confirm(`Remove blog '${blog.title}' by ${blog.author}`)) {
+            if (
+                window.confirm(`Remove blog '${blog.title}' by ${blog.author}`)
+            ) {
                 await blogService.remove(blog.id)
-                timeoutMessage(`Successfully removed blog '${blog.title}' by ${blog.author}`)
-                
+                timeoutMessage(
+                    `Successfully removed blog '${blog.title}' by ${blog.author}`
+                )
+
                 setRefreshBlogs(!refreshBlogs)
-              }
-              timeoutMessage(`Successfully removed blog '${blog.title}' by ${blog.author}`)
+            }
+            timeoutMessage(
+                `Successfully removed blog '${blog.title}' by ${blog.author}`
+            )
         } catch (exception) {
             timeoutMessage(exception.message)
         }
@@ -135,7 +142,12 @@ const App = () => {
                         handleSubmit={handleCreateBlog}
                     />
                 </Togglable>
-                <Blogs refreshBlogs={refreshBlogs} handleLike={handleLike} handleDelete={handleDelete} user={user} />
+                <Blogs
+                    refreshBlogs={refreshBlogs}
+                    handleLike={handleLike}
+                    handleDelete={handleDelete}
+                    user={user}
+                />
             </div>
         )
     }

@@ -3,7 +3,7 @@ GET http://localhost:3001/api/blogs
 ###
 POST http://localhost:3001/api/blogs HTTP/1.1
 content-type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Illvb25hIiwiaWQiOiI2NWY5YjE5ODY1MjhmY2EwMWRlYzA5YWUiLCJpYXQiOjE3MTMwMzc4MTF9.JGYX-OTmkn9CO5mKEN_OCqA2vJ8QGFNpCcpDcYnEwbs
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Illvb25hIiwiaWQiOiI2NWY5YjE5ODY1MjhmY2EwMWRlYzA5YWUiLCJpYXQiOjE3MTMyMTA2NzR9.GzZcJ9ALxTwPhg1GYQg7259930eVG1EEDNJxCAmr6I0
 
 {
     "author": "Yoona",

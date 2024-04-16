@@ -50,9 +50,19 @@ const Blogs = ({ refreshBlogs, handleLike, handleDelete, user }) => {
                             BlogId: {blog.id} <br />
                             Username: {blog.user.username}
                         </Togglable>
-                        <div style={{display: blog.user.id === user.id ? '' : 'none'}}>
-                            <button onClick={async () => {await deletePost(blog)}}>remove</button>
-                        </div>             
+                        <div
+                            style={{
+                                display: blog.user.id === user.id ? '' : 'none',
+                            }}
+                        >
+                            <button
+                                onClick={async () => {
+                                    await deletePost(blog)
+                                }}
+                            >
+                                remove
+                            </button>
+                        </div>
                     </li>
                 ))}
             </ul>
