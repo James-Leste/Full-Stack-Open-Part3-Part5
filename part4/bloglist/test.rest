@@ -3,7 +3,7 @@ GET http://localhost:3001/api/blogs
 ###
 POST http://localhost:3001/api/blogs HTTP/1.1
 content-type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Illvb25hIiwiaWQiOiI2NWY5YjE5ODY1MjhmY2EwMWRlYzA5YWUiLCJpYXQiOjE3MTMyMTA2NzR9.GzZcJ9ALxTwPhg1GYQg7259930eVG1EEDNJxCAmr6I0
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Illvb25hIiwiaWQiOiI2NjIwMTYwN2MwYjUyZGUxMGYzNmVjMzQiLCJpYXQiOjE3MTMzNzg5NDh9.2WmqPGOLzOuo5EjgeQ8_y7fA_kGLnqDYd8w-Zojie7E
 
 {
     "author": "Yoona",
@@ -43,3 +43,7 @@ content-type: application/json
     "username": "Yoona",
     "password": "123"
 }
+
+###
+
+POST http://localhost:3001/api/test

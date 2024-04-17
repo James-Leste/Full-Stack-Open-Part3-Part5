@@ -11,7 +11,8 @@ const Blog = ({ blog, user, deletePost, addLike }) => {
             <div>Author: {blog.author}</div>
             <Togglable buttonLabel={'View'}>
                 <div>Likes: {blog.likes} </div>
-                <button
+                <button 
+                    className='like'
                     onClick={async () => {
                         await addLike(blog)
                     }}
@@ -30,6 +31,7 @@ const Blog = ({ blog, user, deletePost, addLike }) => {
                 }}
             >
                 <button
+                    className='delete'
                     onClick={async () => {
                         await deletePost(blog)
                     }}

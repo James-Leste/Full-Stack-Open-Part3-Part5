@@ -19,7 +19,7 @@ const App = () => {
     const [refreshBlogs, setRefreshBlogs] = useState(false)
 
     useEffect(() => {
-        const loggedUserJSON = window.localStorage.getItem('loggedNoteappUser')
+        const loggedUserJSON = window.localStorage.getItem('loggedBlogappUser')
         if (loggedUserJSON) {
             const user = JSON.parse(loggedUserJSON)
             console.log(user)
@@ -40,7 +40,7 @@ const App = () => {
         try {
             const user = await login(username, password)
             window.localStorage.setItem(
-                'loggedNoteappUser',
+                'loggedBlogappUser',
                 JSON.stringify(user)
             )
             setUser(user)
@@ -61,6 +61,7 @@ const App = () => {
 
     const handleCreateBlog = async (newBlog) => {
         try {
+            console.log(user.token)
             await blogService.create(newBlog)
             timeoutMessage(
                 `created post: {title:${newBlog.title}, author: ${newBlog.author}, url:${newBlog.url}}`
@@ -131,7 +132,7 @@ const App = () => {
                 <div>
                     <Notification message={message} />
                 </div>
-                <Togglable buttonLabel={'New Post'}>
+                <Togglable buttonLabel={'NewPost'}>
                     <NewBlog
                         // title={title}
                         // author={author}
@@ -143,6 +144,7 @@ const App = () => {
                     />
                 </Togglable>
                 <Blogs
+                    id='blogs'
                     refreshBlogs={refreshBlogs}
                     handleLike={handleLike}
                     handleDelete={handleDelete}

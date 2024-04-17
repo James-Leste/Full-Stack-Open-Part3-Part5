@@ -22,6 +22,14 @@ app.use(express.json())
 app.use('/api/blogs', blogRouter)
 app.use('/api/users', usersRouter)
 app.use('/api/login', authRouter)
+
+if (process.env.NODE_ENV === 'test') {
+    const testRouter = require('./controllers/testController')
+    app.use('/api/test', testRouter)
+    console.log('testrouter deployed')
+}
+
+
 app.use(middleware.errorHandler)
 
 

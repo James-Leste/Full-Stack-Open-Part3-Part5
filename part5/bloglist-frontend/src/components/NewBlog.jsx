@@ -15,6 +15,9 @@ const NewBlog = ({ handleSubmit }) => {
             url: url === '' ? null : url,
         }
         await handleSubmit(newBlog)
+        setTitle("")
+        setAuthor('')
+        setUrl('')
     }
     return (
         <div>
@@ -45,7 +48,7 @@ const NewBlog = ({ handleSubmit }) => {
                     />
                 </div>
                 <div>
-                    <button type='submit'>Submit</button>
+                    <button id='addBlog' type='submit'>Submit</button>
                 </div>
             </form>
         </div>
