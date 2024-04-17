@@ -2,6 +2,7 @@
 import { useEffect, useState } from 'react'
 import blogService from '../services/blogs'
 import Togglable from './Togglable'
+import Blog from './Blog'
 
 const Blogs = ({ refreshBlogs, handleLike, handleDelete, user }) => {
     const [blogs, setBlogs] = useState([])
@@ -30,40 +31,13 @@ const Blogs = ({ refreshBlogs, handleLike, handleDelete, user }) => {
         <div>
             <ul>
                 {blogs.map((blog) => (
-                    <li
+                    <Blog
                         key={blog.id}
-                        style={{ border: 'solid', marginBottom: 5 + 'px' }}
-                    >
-                        Title: {blog.title} <br />
-                        Author: {blog.author} <br />
-                        <Togglable buttonLabel={'View'}>
-                            Likes: {blog.likes}{' '}
-                            <button
-                                onClick={async () => {
-                                    await addLike(blog)
-                                }}
-                            >
-                                like
-                            </button>
-                            <br />
-                            Url: {blog.url} <br />
-                            BlogId: {blog.id} <br />
-                            Username: {blog.user.username}
-                        </Togglable>
-                        <div
-                            style={{
-                                display: blog.user.id === user.id ? '' : 'none',
-                            }}
-                        >
-                            <button
-                                onClick={async () => {
-                                    await deletePost(blog)
-                                }}
-                            >
-                                remove
-                            </button>
-                        </div>
-                    </li>
+                        blog={blog}
+                        user={user}
+                        addLike={addLike}
+                        deletePost={deletePost}
+                    />
                 ))}
             </ul>
         </div>
