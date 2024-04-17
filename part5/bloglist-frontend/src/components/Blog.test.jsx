@@ -6,6 +6,8 @@ import userEvent from '@testing-library/user-event'
 
 describe('Blog', async () => {
     let container
+    const mockLikeHandler = vi.fn()
+    const mockDeleteHandler = vi.fn()
 
     const user = {
         username: 'James',
@@ -20,7 +22,7 @@ describe('Blog', async () => {
     }
 
     beforeEach(()=> {
-        container = render(<Blog blog={blog} user={user} />).container
+        container = render(<Blog blog={blog} user={user} addLike={mockLikeHandler} deletePost={mockDeleteHandler} />).container
     })
 
     test('renders title and author', async () => {
@@ -47,9 +49,24 @@ describe('Blog', async () => {
     
         const div = container.querySelector('.togglableContent')
         expect(div).toHaveStyle("display: block")
-      })
+    })
+
+    test('like button hit twice', async () => {
+
+        const user = userEvent.setup()
+        const button = screen.getByText('like')
+        await user.click(button)
+        await user.click(button)
+    
+    
+        expect(mockLikeHandler.mock.calls).toHaveLength(2)
+    })
+    
     
 })
+
+
+
 
 
 
