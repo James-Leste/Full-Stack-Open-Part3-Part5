@@ -23,10 +23,10 @@ describe('Blog', async () => {
         container = render(<Blog blog={blog} user={user} />).container
     })
 
-    test('renders title and author', () => {
+    test('renders title and author', async () => {
         
-        const element1 = screen.getByText('Title: This is a title')
-        const element2 = screen.getByText('Author: James')
+        const element1 = await screen.getByText('Title: This is a title')
+        const element2 = await screen.getByText('Author: James')
     
         expect(element1).toBeDefined()
         expect(element2).toBeDefined()
@@ -39,6 +39,15 @@ describe('Blog', async () => {
         const div = container.querySelector('.togglableContent')
         expect(div).toHaveStyle('display: none')
     })
+
+    test('after clicking the button, children are displayed', async () => {
+        const user = userEvent.setup()
+        const button = screen.getByText('View')
+        await user.click(button)
+    
+        const div = container.querySelector('.togglableContent')
+        expect(div).toHaveStyle("display: block")
+      })
     
 })
 
