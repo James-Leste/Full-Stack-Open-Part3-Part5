@@ -6,7 +6,7 @@ import Togglable from './Togglable'
 
 const Blog = ({ blog, user, deletePost, addLike }) => {
     return (
-        <li key={blog.id} style={{ border: 'solid', marginBottom: 5 + 'px' }}>
+        <li className='blog' key={blog.id} style={{ border: 'solid', marginBottom: 5 + 'px' }}>
             <div>Title: {blog.title}</div>
             <div>Author: {blog.author}</div>
             <Togglable buttonLabel={'View'}>

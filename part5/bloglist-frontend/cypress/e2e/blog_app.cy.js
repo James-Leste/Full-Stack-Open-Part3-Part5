@@ -1,12 +1,18 @@
 describe('Note app', function() {
   beforeEach(() => {
     cy.request('POST', 'http://localhost:3001/api/test')
-    const user = {
+    const user1 = {
       "username": "Yoona",
       "name": "You Wu",
       "password": "123"
     }
-    cy.request('POST', 'http://localhost:3001/api/users', user) 
+    const user2 = {
+      "username": "James",
+      "name": "Ziqi Wang",
+      "password": "123"
+    }
+    cy.request('POST', 'http://localhost:3001/api/users', user1) 
+    cy.request('POST', 'http://localhost:3001/api/users', user2)
     cy.visit('http://localhost:5173')
   })
 
@@ -34,21 +40,16 @@ describe('Note app', function() {
 
   describe('When logged in', function() {
     beforeEach(function() {
-      cy.request('POST', 'http://localhost:3001/api/login', {
-      username: 'Yoona', password: '123'
-    }).then(response => {
-      localStorage.setItem('loggedBlogappUser', JSON.stringify(response.body))
-      cy.visit('http://localhost:5173')
-    })
+      cy.login({username: 'Yoona', password:'123'})
     })
 
     it('New blog form is visible', function() {
-      cy.get('#NewPost').click()
+      cy.get('.NewPost').click()
       cy.get('form').should('be.visible')
     })
 
     it('a new blog can be created', function(){
-      cy.get('#NewPost').click()
+      cy.get('.NewPost').click()
       cy.get('#title').type('Good Blog')
       cy.get('#author').type('Good Man')
       cy.get('#url').type('good.com')
@@ -58,12 +59,12 @@ describe('Note app', function() {
 
     describe('with one post', function() {
       beforeEach(function() {
-        cy.get('#NewPost').click()
-        cy.get('#title').type('Good Blog')
-        cy.get('#author').type('Good Man')
-        cy.get('#url').type('good.com')
-        cy.get('#addBlog').click()
-        cy.get('#View').click()
+        cy.addBlog({
+          title: 'Good Blog',
+          author: 'Good Man',
+          url: 'good.com'
+        })
+        cy.get('.View').click()
       })
 
       it('user can like a blog', function(){
@@ -76,7 +77,23 @@ describe('Note app', function() {
         cy.contains('Likes: 0').should('not.exist')
       })
 
-      
+      it('user can only remove his own blog', function() {
+        cy.get('#logout').click()
+        cy.login({username: 'James', password: '123'})
+        cy.get('.View').click()
+        cy.get('.delete').should('not.visible')
+      })
+
+      it('blogs are ordered by likes', function() {
+        cy.addBlog({
+          title: 'Blogs with more likes',
+          author: 'More is Better',
+          url: 'more.com'
+        })
+        cy.get('.View').eq(1).click()
+        cy.get('.like').eq(1).click()
+        cy.get('.blog').eq(0).contains('Blogs with more likes')
+      })
 
     })
 
